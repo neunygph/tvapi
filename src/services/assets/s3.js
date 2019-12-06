@@ -17,7 +17,6 @@ const upload = (file_name, file) => {
 	return new Promise((resolve, reject) => {
 		s3.putObject(s3Config, (err, resp) => {
 			if (err) {
-				console.log(err);
 				reject({ success: false, data: err });
 			}
 			resolve({ sucess: true, data: resp });
@@ -69,13 +68,7 @@ class S3Service {
 		return new Promise((resolve, reject) => {
 			const params = {
 				Bucket: BUCKET,
-				Delete: {
-					Objects: [
-						{
-							Key: `${path}/${fileName}`
-						}
-					]
-				}
+				Key: `${path}/${fileName}`
 			};
 
 			s3.deleteObject(params, (err, data) => {
@@ -142,7 +135,6 @@ class S3Service {
 						});
 					})
 					.catch(err => {
-						console.log(err);
 						res.sendStatus(500);
 					});
 			});
